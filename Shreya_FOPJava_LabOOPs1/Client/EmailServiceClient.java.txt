@@ -1,0 +1,58 @@
+package com.email.client;
+
+import java.util.Scanner;
+import com.email.model.*;
+import com.email.service.*;
+
+public class EmailServiceClient {
+
+	public static void main(String[] args) {
+		
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Please enter your first name");
+		String firstName = scanner.next();
+
+		System.out.println("Please enter your last name");
+		String lastName = scanner.next();
+
+		Employee newHire = new Employee(firstName,lastName);
+		
+		String email = null;
+		int flag = 0;
+		
+		do {
+		System.out.println("Please enter the department from the following \n 1. Technical"
+				+ "\n 2. Admin \n 3. Human Resource \n 4. Legal");
+		int dept = scanner.nextInt();
+		
+		
+			switch(dept) {
+			case 1: newHire.setDept("Tech");
+					email = CredentialService.generateEmailAddress(firstName, lastName, "Tech");
+					flag = 0;
+					break;
+			case 2: newHire.setDept("Admin");
+					email = CredentialService.generateEmailAddress(firstName, lastName, "Admin");
+					flag = 0;
+					break;
+			case 3: newHire.setDept("HR");
+					email = CredentialService.generateEmailAddress(firstName, lastName, "HR");
+					flag = 0;
+					break;
+			case 4: newHire.setDept("Legal");
+					email = CredentialService.generateEmailAddress(firstName, lastName, "Legal");
+					flag = 0;
+					break;
+			default: System.out.println("Invalid input");
+					flag = 1;
+			}
+		}while(flag == 1);
+		
+		String password = CredentialService.generatePassword(8);
+		
+		CredentialService.showCredentials(firstName, email, password);
+		
+		scanner.close();
+	}
+
+}
